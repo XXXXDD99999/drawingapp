@@ -22,12 +22,12 @@ public class DrawingCanvas extends Canvas{
             public void mousePressed(MouseEvent e) {
                 x0 = e.getX();
                 y0 = e.getY();
-                shapes.add(new Shape(drawingMode,drawingColor, x0, y0, x0, y0));
+                shapes.add(new Shape(drawingMode,drawingColor, x0, y0, x0, y0, new ArrayList<>()));
                 repaint();
             }
 
             public void mouseReleased(MouseEvent e) {
-                if (drawingMode == DrawingMode.FREEHAND) {
+                if (drawingMode == DrawingMode.FREEHAND && !points.isEmpty()) {
                     shapes.add(createFreehandShape());
                     points.clear();
                 } else {
@@ -50,7 +50,7 @@ public class DrawingCanvas extends Canvas{
         });
     }
     private Shape createFreehandShape() {
-        return new Shape(DrawingMode.FREEHAND, drawingColor, points);
+        return new Shape(DrawingMode.FREEHAND, drawingColor,0,0,0,0, new ArrayList<>(points));
     }
     public void setDrawingMode(DrawingMode mode) {
         drawingMode = mode;
@@ -64,14 +64,14 @@ public class DrawingCanvas extends Canvas{
         for (Shape shape : shapes) {
             shape.draw(g);
         }
-        if (drawingMode == DrawingMode.FREEHAND && points.size() > 1) {
-            g.setColor(drawingColor);
-            for (int i = 1; i < points.size(); i++) {
-                Point p1 = points.get(i - 1);
-                Point p2 = points.get(i);
-                g.drawLine(p1.x, p1.y, p2.x, p2.y);
-            }
-        }
+//        if (drawingMode == DrawingMode.FREEHAND && points.size() > 1) {
+//            g.setColor(drawingColor);
+//            for (int i = 1; i < points.size(); i++) {
+//                Point p1 = points.get(i - 1);
+//                Point p2 = points.get(i);
+//                g.drawLine(p1.x, p1.y, p2.x, p2.y);
+//            }
+//        }
     }
 }
 

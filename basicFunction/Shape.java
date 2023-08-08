@@ -13,14 +13,14 @@ public class Shape {
 
     private List<Point> points; // List to store points for freehand drawing
 
-    public Shape(DrawingMode mode,Color color, int x0, int y0, int x1, int y1) {
+    public Shape(DrawingMode mode,Color color, int x0, int y0, int x1, int y1, List<Point> points) {
         this.color = color;
         this.mode = mode;
         this.x0 = x0;
         this.y0 = y0;
         this.x1 = x1;
         this.y1 = y1;
-        this.points = new ArrayList<>();
+        this.points = points;
     }
 
     public void setEndPoint(int x, int y) {
@@ -34,13 +34,13 @@ public class Shape {
         g.setColor(color);
         switch (mode) {
             case FREEHAND:
-//                if (points.size() > 1) {
-//                    for (int i = 1; i < points.size(); i++) {
-//                        Point p1 = points.get(i - 1);
-//                        Point p2 = points.get(i);
-//                        g.drawLine(p1.x, p1.y, p2.x, p2.y);
-//                    }
-//                }
+                if (points.size() > 1) {
+                    for (int i = 1; i < points.size(); i++) {
+                        Point p1 = points.get(i - 1);
+                        Point p2 = points.get(i);
+                        g.drawLine(p1.x, p1.y, p2.x, p2.y);
+                    }
+                }
                 break;
             case STRAIGHT_LINE:
                 g.drawLine(x0, y0, x1, y1);
